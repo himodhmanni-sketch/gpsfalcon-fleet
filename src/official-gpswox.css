@@ -1,0 +1,1242 @@
+/* ==========================================================================
+   GPSWOX Official UI Theme & Exact Layout Match
+   ========================================================================== */
+
+:root {
+  --gpswox-teal: #00b4c6;
+  --gpswox-teal-hover: #009aa9;
+  --gpswox-teal-dark: #008794;
+  --gpswox-teal-light: #e0f7fa;
+  --gpswox-sidebar-bg: #ffffff;
+  --gpswox-sidebar-width: 200px;
+  --gpswox-nav-active: #6e7987;
+  --gpswox-text-dark: #374151;
+  --gpswox-text-muted: #6b7280;
+  --gpswox-border: #e5e7eb;
+  --gpswox-card-bg: #ffffff;
+  --gpswox-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --status-green: #10b981;
+  --status-red: #ef4444;
+  --status-yellow: #f59e0b;
+}
+
+/* Base resets for official GPSWOX look */
+body {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+.gps-app-root {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==========================================================================
+   1. Official Top Utility Header (GPSWOX Trial & Support Bar)
+   ========================================================================== */
+.official-top-header {
+  height: 38px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  gap: 18px;
+  font-size: 0.76rem;
+  color: #4b5563;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.upgrade-btn-teal {
+  background: var(--gpswox-teal);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-weight: 700;
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.upgrade-btn-teal:hover {
+  background: var(--gpswox-teal-hover);
+}
+
+.trial-days-text {
+  color: #374151;
+}
+.trial-days-text strong {
+  color: #ef4444;
+}
+
+.top-help-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #0284c7;
+  text-decoration: none;
+  font-weight: 500;
+}
+.top-help-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   2. Main Workspace Layout: Official Sidebar + Map Canvas
+   ========================================================================== */
+.gps-main-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Official GPSWOX Left Sidebar */
+.official-gpswox-sidebar {
+  width: var(--gpswox-sidebar-width);
+  background: #ffffff;
+  border-inline-end: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 900;
+  box-shadow: 1px 0 6px rgba(0, 0, 0, 0.04);
+  transition: width 0.25s ease;
+}
+
+.sidebar-brand-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.gpswox-official-logo {
+  display: flex;
+  flex-direction: column;
+  direction: ltr !important;
+  text-align: left;
+}
+
+.logo-main-text {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #00b4c6;
+  direction: ltr !important;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.logo-sub-tag {
+  font-size: 0.55rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.sidebar-collapse-toggle {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+/* Navigation List */
+.sidebar-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 10px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: start;
+  transition: all 0.15s ease;
+}
+
+.sidebar-menu-item:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.sidebar-menu-item.active {
+  background: var(--gpswox-nav-active);
+  color: #ffffff;
+}
+
+.sidebar-menu-item.active svg {
+  color: #ffffff;
+}
+
+.menu-item-icon {
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.menu-item-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Sidebar Collapsed State */
+.official-gpswox-sidebar.collapsed {
+  width: 58px;
+}
+.official-gpswox-sidebar.collapsed .menu-item-text,
+.official-gpswox-sidebar.collapsed .user-account-email,
+.official-gpswox-sidebar.collapsed .user-account-label span,
+.official-gpswox-sidebar.collapsed .language-switch-row span:first-child,
+.official-gpswox-sidebar.collapsed .switch-old-ver-btn span,
+.official-gpswox-sidebar.collapsed .logout-btn-row span {
+  display: none !important;
+}
+.official-gpswox-sidebar.collapsed .sidebar-menu-item {
+  justify-content: center;
+  padding: 10px 0;
+}
+.official-gpswox-sidebar.collapsed .sidebar-brand-top {
+  padding: 10px 6px;
+  justify-content: center;
+}
+.official-gpswox-sidebar.collapsed .sidebar-bottom-profile {
+  padding: 10px 4px;
+  align-items: center;
+}
+.official-gpswox-sidebar.collapsed .user-account-row {
+  align-items: center;
+}
+.official-gpswox-sidebar.collapsed .language-switch-row,
+.official-gpswox-sidebar.collapsed .switch-old-ver-btn,
+.official-gpswox-sidebar.collapsed .logout-btn-row {
+  justify-content: center;
+  padding: 6px 0;
+  width: 100%;
+}
+
+/* Hide legacy duplicate map controls when OfficialMapToolbar is used */
+.map-floating-controls {
+  display: none !important;
+}
+
+/* Sidebar Bottom User & Language Section */
+.sidebar-bottom-profile {
+  padding: 12px 14px;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-account-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.user-account-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  color: #9ca3af;
+}
+
+.user-account-email {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.language-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.switch-old-ver-btn, .logout-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  font-size: 0.72rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 2px 0;
+}
+.switch-old-ver-btn:hover, .logout-btn-row:hover {
+  color: #111827;
+}
+
+/* ==========================================================================
+   3. Floating "السيارات" (Objects) Card on Map
+   ========================================================================== */
+.floating-objects-panel {
+  position: absolute;
+  top: 16px;
+  inset-inline-start: 16px;
+  width: 330px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: var(--gpswox-card-shadow);
+  border: 1px solid #e5e7eb;
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 440px;
+}
+
+.objects-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  background: #ffffff;
+}
+
+.panel-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.panel-header-icon {
+  color: var(--gpswox-teal);
+}
+
+.panel-collapse-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+/* Actions Row (+ Button & Search) */
+.objects-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+}
+
+.btn-add-object-teal {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--gpswox-teal);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 180, 198, 0.3);
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+.btn-add-object-teal:hover {
+  background: var(--gpswox-teal-hover);
+}
+
+.btn-menu-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: var(--gpswox-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.objects-search-box {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 10px;
+  background: #f9fafb;
+}
+
+.objects-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.78rem;
+  color: #374151;
+}
+
+/* Vehicles List Inside Panel */
+.objects-list-body {
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.objects-group-accordion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #f9fafb;
+  border-top: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.group-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Status Filter Tabs (Modern Segmented Pills) */
+.objects-status-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #f8fafc;
+  border-bottom: 1px solid #f1f5f9;
+  overflow-x: auto;
+}
+
+.status-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.status-pill-btn:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
+
+.status-pill-btn.active {
+  background: #00b4c6;
+  color: #ffffff;
+  border-color: #00b4c6;
+  box-shadow: 0 2px 8px rgba(0, 180, 198, 0.35);
+}
+
+.status-pill-btn.active .status-pill-dot {
+  background: #ffffff !important;
+}
+
+.status-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-pill-count {
+  font-size: 0.65rem;
+  opacity: 0.85;
+  font-family: var(--font-mono);
+}
+
+/* Vehicle Row Item - Modernized */
+.vehicle-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  gap: 8px;
+}
+
+.vehicle-row-item:hover {
+  background: #f8fafc;
+}
+
+.vehicle-row-item:hover .vehicle-hover-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.vehicle-row-item.active {
+  background: #f0fdfa;
+  border-inline-start: 3px solid var(--gpswox-teal);
+}
+
+.vehicle-row-left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.vehicle-icon-pill {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.vehicle-icon-pill.green {
+  background: rgba(16, 185, 129, 0.12);
+}
+.vehicle-icon-pill.yellow {
+  background: rgba(245, 158, 11, 0.12);
+}
+.vehicle-icon-pill.red {
+  background: rgba(239, 68, 68, 0.1);
+}
+.vehicle-icon-pill.selected {
+  box-shadow: 0 0 0 2px var(--gpswox-teal);
+}
+
+.vehicle-status-dot {
+  position: absolute;
+  bottom: -1px;
+  inset-inline-end: -1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+}
+
+.vehicle-status-dot.green { background: #10b981; }
+.vehicle-status-dot.red { background: #ef4444; }
+.vehicle-status-dot.yellow { background: #f59e0b; }
+
+.vehicle-status-dot.pulsing {
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: vehiclePulse 1.8s infinite;
+}
+
+@keyframes vehiclePulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.vehicle-row-center {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.vehicle-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.vehicle-row-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vehicle-plate-pill {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.vehicle-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vehicle-speed-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.vehicle-speed-tag.green { color: #059669; }
+.vehicle-speed-tag.yellow { color: #d97706; }
+.vehicle-speed-tag.red { color: #dc2626; }
+
+.vehicle-time-sub {
+  font-size: 0.62rem;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+}
+
+.vehicle-row-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.vehicle-row-item .vehicle-hover-actions {
+  display: flex !important;
+  position: static !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.vehicle-row-item:hover .vehicle-hover-actions {
+  opacity: 1 !important;
+}
+
+.quick-action-micro-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.quick-action-micro-btn:hover {
+  background: #e0f2fe;
+  color: #0284c7;
+  transform: scale(1.08);
+}
+
+.quick-action-micro-btn.active {
+  background: #00b4c6;
+  color: #ffffff;
+}
+
+.vehicle-visibility-checkbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.vehicle-visibility-checkbox input[type="checkbox"] {
+  accent-color: #00b4c6;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+/* User Account Profile inside Sidebar - Modernized */
+.user-profile-modern-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.user-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00b4c6, #0e7490);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.user-online-pip {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 1.5px solid #ffffff;
+}
+
+.role-pill-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-pill-badge.superadmin {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+.role-pill-badge.reseller {
+  background: #fef3c7;
+  color: #b45309;
+}
+.role-pill-badge.client {
+  background: #ccfbf1;
+  color: #0f766e;
+}
+.role-pill-badge.driver {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* ==========================================================================
+   4. Floating Bottom Telemetry Dock (4 Cards matching real GPSWOX)
+   ========================================================================== */
+.official-bottom-dock {
+  position: absolute;
+  bottom: 16px;
+  inset-inline-start: 16px;
+  inset-inline-end: 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.05fr 1.15fr;
+  gap: 12px;
+  z-index: 800;
+  pointer-events: auto;
+}
+
+.dock-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 135px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dock-card:hover {
+  box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.12);
+}
+
+.dock-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.dock-card-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.dock-header-icon-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(0, 180, 198, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dock-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: #475569;
+}
+
+.dock-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dock-data-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #64748b;
+  font-size: 0.7rem;
+}
+
+.dock-data-value {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dock-micro-btn, .dock-minimize-btn, .dock-icon-action-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+
+.dock-micro-btn:hover, .dock-minimize-btn:hover, .dock-icon-action-btn:hover {
+  background: #f1f5f9;
+  color: #00b4c6;
+}
+
+.dock-status-pill {
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.dock-status-pill.on {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+}
+.dock-status-pill.off {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.btn-add-maintenance-modern {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(135deg, #00b4c6, #0e7490);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.76rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 180, 198, 0.3);
+  transition: all 0.15s ease;
+}
+
+.btn-add-maintenance-modern:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 180, 198, 0.45);
+}
+
+.maintenance-btn-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-dashcam-glow {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.dock-live-pip-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+}
+
+.live-dot-pulsing {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: livePulse 1.2s infinite;
+}
+
+@keyframes livePulse {
+  0% { transform: scale(0.9); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.5; }
+  100% { transform: scale(0.9); opacity: 1; }
+}
+
+.dashcam-dock-preview-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3px;
+  transition: transform 0.15s ease;
+}
+
+.dashcam-dock-preview-btn:hover {
+  transform: scale(1.03);
+}
+
+.dashcam-dock-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.dashcam-dock-hint {
+  font-size: 0.64rem;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   5. Floating Right Teal Map Toolbar (Tools & Zoom) - Modernized
+   ========================================================================== */
+.official-map-toolbar-right {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 800;
+}
+
+.map-tools-strip-teal {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #00b4c6, #0891b2);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 180, 198, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.teal-tool-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.teal-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.teal-tool-btn.active {
+  background: #0e7490 !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.map-tools-strip-white {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.white-tool-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.white-tool-btn:hover {
+  background: #f1f5f9;
+  color: #00b4c6;
+}
+
+.white-tool-btn.zoom-btn:hover {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+/* ==========================================================================
+   6. Map Marker Styling
+   ========================================================================== */
+.official-vehicle-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.marker-arrow-pointer {
+  color: #10b981;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  transition: transform 0.3s ease;
+}
+
+.marker-pill-label {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #1f2937;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   7. Official Modals, Overlays, Tabs & Dropdowns
+   ========================================================================== */
+.modal-overlay-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.modal-box-custom {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: scaleUp 0.18s ease-out;
+}
+
+.modal-header-teal {
+  background: linear-gradient(135deg, #00b4c6 0%, #008794 100%);
+  color: #ffffff;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title-text {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.modal-subtitle-text {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  display: block;
+  margin-top: 1px;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.admin-nav-tabs {
+  display: flex;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 16px;
+  gap: 8px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.admin-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.admin-tab-btn:hover {
+  color: var(--gpswox-teal);
+}
+.admin-tab-btn.active {
+  color: var(--gpswox-teal);
+  border-bottom-color: var(--gpswox-teal);
+}
+
+.badge-count {
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+}
+.admin-tab-btn.active .badge-count {
+  background: #e0f7fa;
+  color: var(--gpswox-teal-dark);
+}
+
+.top-help-link-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #0284c7;
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.top-help-link-btn:hover {
+  background: #f0f9ff;
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+

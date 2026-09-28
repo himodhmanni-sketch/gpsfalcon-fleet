@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------
+  # 1. PostgreSQL 17 Database Service
+  # ----------------------------------------------------
+  postgres:
+    image: postgres:17-alpine
+    container_name: gpswox-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-gpswox_secure_pwd_2026}
+      POSTGRES_DB: ${PG_DATABASE:-gpswox_fleet}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------
+  # 2. GPSWOX Full-Stack App & GPS Gateway Service
+  # ----------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gpswox-app
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASSWORD:-gpswox_secure_pwd_2026}@postgres:5432/${PG_DATABASE:-gpswox_fleet}
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: ${PG_USER:-postgres}
+      PGPASSWORD: ${PG_PASSWORD:-gpswox_secure_pwd_2026}
+      PGDATABASE: ${PG_DATABASE:-gpswox_fleet}
+      JWT_SECRET: ${JWT_SECRET:-d94e24ebff8fa7c222ff4ae42b5887ce6a32d1891ce5c9c9b4566ef717462002}
+      ALLOWED_ORIGINS: "*"
+    ports:
+      - "3001:3001"   # Web UI + REST APIs + WebSockets
+      - "5055:5055"   # Traccar Client (Mobile phone GPS app)
+      - "5023:5023"   # Concox GT06 Tracker Hardware
+      - "5027:5027"   # Teltonika Tracker Hardware
+      - "5001:5001"   # Coban GPS103 Tracker Hardware
+
+volumes:
+  postgres_data:
+    name: gpswox_postgres_data
