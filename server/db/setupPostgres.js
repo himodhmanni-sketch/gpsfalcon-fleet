@@ -19,9 +19,10 @@ export async function initPostgres() {
   
   if (process.env.DATABASE_URL) {
     console.log('[PostgreSQL] Connecting via DATABASE_URL...');
+    const isExternalOrSsl = process.env.DATABASE_URL.includes("sslmode=require") || process.env.PGSSL === "true";
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.PGSSL === "true" || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
+      ssl: isExternalOrSsl ? { rejectUnauthorized: false } : false
     });
   } else {
     console.log('[PostgreSQL] Connecting to server to verify database...');

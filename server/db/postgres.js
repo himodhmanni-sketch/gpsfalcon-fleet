@@ -6,10 +6,14 @@ import { validateClientPayload, validateDevicePayload, validateEmail } from '../
 
 const { Pool } = pg;
 
+const isExternalOrSsl = process.env.DATABASE_URL 
+  ? (process.env.DATABASE_URL.includes("sslmode=require") || process.env.PGSSL === "true")
+  : false;
+
 export const pgPool = process.env.DATABASE_URL
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.PGSSL === "true" || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+      ssl: isExternalOrSsl ? { rejectUnauthorized: false } : false,
       max: parseInt(process.env.PG_POOL_MAX || "20", 10),
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 5000

@@ -770,21 +770,35 @@ const osmandHttpServer = http.createServer(async (req, res) => {
   }
 });
 
+// Initialize PostgreSQL Schema and seed data on startup
+initPostgres().catch((err) => {
+  console.log(`[PostgreSQL Init Notice]: ${err.message}`);
+});
+
 // Launch All Servers
 const HTTP_PORT = parseInt(process.env.PORT || "3001", 10);
-server.listen(HTTP_PORT, () => {
+server.listen(HTTP_PORT, "0.0.0.0", () => {
   console.log(`=======================================================`);
   console.log(`🚀 GPSWOX / Traccar Protocol Gateway Running:`);
   console.log(`💾 Persistent Database:   PostgreSQL 17 (gpswox_fleet)`);
-  console.log(`📡 WebSocket & REST API:   http://localhost:${HTTP_PORT}`);
-  console.log(`📡 Traccar OsmAnd Port:    http://localhost:5055`);
-  console.log(`📡 Concox GT06 TCP Port:   localhost:5023`);
-  console.log(`📡 Teltonika Code 8 Port:  localhost:5027`);
-  console.log(`📡 Coban GPS103 TCP Port:  localhost:5001`);
+  console.log(`📡 WebSocket & REST API:   http://0.0.0.0:${HTTP_PORT}`);
+  console.log(`📡 Traccar OsmAnd Port:    http://0.0.0.0:5055`);
+  console.log(`📡 Concox GT06 TCP Port:   0.0.0.0:5023`);
+  console.log(`📡 Teltonika Code 8 Port:  0.0.0.0:5027`);
+  console.log(`📡 Coban GPS103 TCP Port:  0.0.0.0:5001`);
   console.log(`=======================================================`);
 });
 
-osmandHttpServer.listen(5055).on("error", (e) => console.log(`[5055 Port Notice]: ${e.message}`));
-gt06Server.listen(5023).on("error", (e) => console.log(`[5023 Port Notice]: ${e.message}`));
-teltonikaServer.listen(5027).on("error", (e) => console.log(`[5027 Port Notice]: ${e.message}`));
-gps103Server.listen(5001).on("error", (e) => console.log(`[5001 Port Notice]: ${e.message}`));
+// Hardware listeners (graceful in containerized/PaaS environments)
+try {
+  osmandHttpServer.listen(5055, "0.0.0.0").on("error", (e) => console.log(`[5055 Port Notice]: ${e.message}`));
+} catch (e) {}
+try {
+  gt06Server.listen(5023, "0.0.0.0").on("error", (e) => console.log(`[5023 Port Notice]: ${e.message}`));
+} catch (e) {}
+try {
+  teltonikaServer.listen(5027, "0.0.0.0").on("error", (e) => console.log(`[5027 Port Notice]: ${e.message}`));
+} catch (e) {}
+try {
+  gps103Server.listen(5001, "0.0.0.0").on("error", (e) => console.log(`[5001 Port Notice]: ${e.message}`));
+} catch (e) {}
